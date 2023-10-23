@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "geniza-sdk-python"
+version = "0.1.0"
+description = "This SDK is the best and easiest way to connect to the Geniza.ai API."
+authors = ["James Turton <james@geniza.ai>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+httmock = "^1.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

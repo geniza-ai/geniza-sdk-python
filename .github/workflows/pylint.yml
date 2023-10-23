@@ -16,8 +16,14 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install pylint
+        sudo sh -c "
+            apt install python3-pip python3-pylint-common
+
+            # The python3-poetry in the Ubuntu repos is too old so we install
+            # using pip.
+            pip install poetry
+        "
+        poetry install
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
