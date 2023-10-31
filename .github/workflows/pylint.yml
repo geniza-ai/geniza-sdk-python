@@ -29,7 +29,7 @@ jobs:
           bash -c "
             pylint **/*.py
 
-            echo 'Masking pylint messages that are neither an error (2^0) or a'
+            echo 'Masking pylint messages that are neither an error (2^0) nor a'
             echo 'warning (2^1) from its exit code so that they do not abort the'
             echo 'CI build.'
 
