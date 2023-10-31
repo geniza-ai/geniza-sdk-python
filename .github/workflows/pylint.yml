@@ -9,21 +9,29 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        sudo sh -c "
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          sudo sh -c "
             apt install python3-pip python3-pylint-common
 
             # The python3-poetry in the Ubuntu repos is too old so we install
             # using pip.
             pip install poetry
-        "
-        poetry install
-    - name: Analysing the code with pylint
-      run: |
-        pylint $(git ls-files '*.py')
+          "
+          poetry install
+      - name: Analysing the code with pylint
+        run: |
+          bash -c "
+            pylint **/*.py
+
+            echo 'Masking pylint messages that are neither an error (2^0) or a'
+            echo 'warning (2^1) from its exit code so that they do not abort the'
+            echo 'CI build.'
+
+            exit $(( $? & 3 ))
+          "
