@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "geniza-sdk-python"
-version = "0.1.0"
+name = "geniza"
+version = "0.1.1"
 description = "This SDK is the best and easiest way to connect to the Geniza.ai API."
-authors = ["James Turton <james@geniza.ai>"]
+authors = ["James Turton <james@geniza.ai>", "Charles Givre <charles@geniza.ai>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]

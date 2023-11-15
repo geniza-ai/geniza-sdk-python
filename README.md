@@ -1,4 +1,4 @@
-Geniza PHP SDK
+Geniza Python SDK
 =========================
 [![License](https://img.shields.io/packagist/l/geniza-ai/geniza-sdk-php?logo=MIT&logoColor=ffffff)](LICENSE)
 
@@ -10,7 +10,7 @@ Installation
 Install using pip:
 
 ```sh
-pip install geniza-sdk-php
+pip install geniza-sdk-python
 ```
 
 Usage
