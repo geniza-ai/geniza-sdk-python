@@ -1,6 +1,6 @@
 from api.client import HttpClient
-from config import Access
-from config import Config
+from config.config import Access
+from config.config import Config
 
 
 class Geniza:
@@ -14,7 +14,7 @@ class Geniza:
         if sandbox_mode:
             self.config.set_as_sandbox()
 
-    def ask_sapient_squirrel(self, question: str) -> str:
+    def ask_sapient_squirrel(self, question: str) -> dict:
         """The Sapient Squirrel
 
         :param question: the question to ask the Sapient Squirrel
@@ -41,3 +41,15 @@ class Geniza:
             'feedback': add_feedback
         }
         self._client.post('feedback', payload)
+
+    def extract_stock_symbols(self, text: str):
+        """
+        This component accepts an article or some other text as input and extracts
+        the company names and ticker symbols for that company.
+
+        :param text: The input article or text.
+        """
+        if text is None or len(text) == 0:
+            raise ValueError("You must supply text from which to extract stocks.")
+
+        return self._client.post('extractors/stock_symbols', {'text': text})
