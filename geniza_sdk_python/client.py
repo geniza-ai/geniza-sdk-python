@@ -1,8 +1,9 @@
-from http import  HTTPStatus
+from http import HTTPStatus
 from json import dumps
+from urllib.parse import urljoin
 from sys import hexversion
 import requests
-from config import Config
+from geniza_sdk_python.config import Config
 
 FMT_AUTHZ = 'HMAC-SHA256 {}:{}'
 FMT_USER_AGENT = 'Geniza.ai-SDK-Python/{}, Python/{}'
@@ -18,12 +19,12 @@ class HttpClient:
         """Executes a POST against a Geniza service, see request method
         docstring for usage
         """
-        return self.request(url, 'POST', payload, add_headers)
+        return self.request('POST', url, payload, add_headers)
 
     def request(
             self,
             method: str,
-            url: str,
+            path: str,
             payload: dict,
             add_headers: dict = None
             ) -> dict:
@@ -56,7 +57,7 @@ class HttpClient:
 
         response = requests.request(
             method,
-            url,
+            urljoin(self.config.base_uri, path),
             headers=headers,
             timeout=self.config.request_timeout_s
         )

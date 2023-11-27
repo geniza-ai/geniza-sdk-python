@@ -1,8 +1,7 @@
-from access import Access
-from base_config import BaseConfig
+from geniza_sdk_python.access import Access
 
 
-class Config(BaseConfig):
+class Config():
     """ """
     def __init__(self, access: Access):
         super().__init__()

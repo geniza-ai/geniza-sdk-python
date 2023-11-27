@@ -1,6 +1,12 @@
+<<<<<<<< HEAD:geniza/geniza.py
 from api.client import HttpClient
 from config.config import Access
 from config.config import Config
+========
+from geniza_sdk_python.client import HttpClient
+from geniza_sdk_python.access import Access
+from geniza_sdk_python.config import Config
+>>>>>>>> b712a0c (Move code under geniza_sdk_python/.):geniza_sdk_python/geniza.py
 
 
 class Geniza:
