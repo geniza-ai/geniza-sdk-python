@@ -10,14 +10,14 @@ Installation
 Install using pip:
 
 ```sh
-pip install geniza-sdk-python
+pip install geniza_sdk_python
 ```
 
 Usage
 -----
 
 ```python
-from geniza-sdk-python import Geniza
+from geniza_sdk_python import Geniza
 
 geniza = Geniza(key, secret_key)
 answer = geniza.ask_sapient_squirrel('How much wood would a woodchuck chuck?')
