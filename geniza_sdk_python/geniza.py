@@ -14,7 +14,7 @@ class Geniza:
         if sandbox_mode:
             self.config.set_as_sandbox()
 
-    def ask_sapient_squirrel(self, question: str) -> dict:
+    def ask_sapient_squirrel(self, question: str) -> str:
         """The Sapient Squirrel
 
         :param question: the question to ask the Sapient Squirrel
@@ -44,7 +44,7 @@ class Geniza:
         }
         self._client.post('feedback', payload)
 
-    def extract_stock_symbols(self, text: str):
+    def extract_stock_symbols(self, text: str) -> list:
         """
         This component accepts an article or some other text as input and extracts
         the company names and ticker symbols for that company.
