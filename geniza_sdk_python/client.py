@@ -58,6 +58,7 @@ class HttpClient:
         response = requests.request(
             method,
             urljoin(self.config.base_uri, path),
+            data=dumps(payload),
             headers=headers,
             timeout=self.config.request_timeout_s
         )

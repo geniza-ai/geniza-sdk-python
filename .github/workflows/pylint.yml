@@ -1,3 +1,4 @@
+---
 name: Pylint
 
 on: [push]
@@ -24,14 +25,17 @@ jobs:
             pip install poetry
           "
           poetry install
-      - name: Analysing the code with pylint
+      - name: Analyse the code with pylint
         run: |
           bash -c "
             pylint **/*.py
 
-            echo 'Masking pylint messages that are neither an error (2^0) nor a'
-            echo 'warning (2^1) from its exit code so that they do not abort the'
-            echo 'CI build.'
+            echo 'Masking pylint messages that are neither an error (2^0) nor'
+            echo 'a warning (2^1) from its exit code so that they do not abort'
+            echo 'the CI build.'
 
             exit $(( $? & 3 ))
           "
+      - name: Run unit tests
+        run: |
+          poetry run test
