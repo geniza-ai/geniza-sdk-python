@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo sh -c "
-            apt install python3-pip python3-pylint-common
+            apt install python3-pip
 
             # The python3-poetry in the Ubuntu repos is too old so we install
             # using pip.
@@ -27,7 +27,7 @@ jobs:
           poetry install
       - name: Analyse the code with pylint
         run: |
-          bash -c "
+          poetry run bash -c "
             pylint **/*.py
 
             echo 'Masking pylint messages that are neither an error (2^0) nor'

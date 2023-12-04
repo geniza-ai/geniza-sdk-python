@@ -6,11 +6,12 @@ authors = ["Geniza AI <support@geniza.ai>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 httmock = "^1.4.0"
+pylint = "^3.0.0"
 
 [build-system]
 requires = ["poetry-core"]

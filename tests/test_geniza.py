@@ -1,8 +1,8 @@
 import re
 import unittest
-from geniza_sdk_python.geniza import Geniza
-from httmock import urlmatch, HTTMock
 from json import dumps, loads
+from httmock import urlmatch, HTTMock
+from geniza_sdk_python.geniza import Geniza
 
 
 class TestGeniza(unittest.TestCase):
