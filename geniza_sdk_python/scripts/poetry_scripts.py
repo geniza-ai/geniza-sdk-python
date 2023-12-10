@@ -1,10 +1,18 @@
 import subprocess
 
 
+def lint():
+    """
+    Runs Pylint in the project virtualenv.
+    """
+    subprocess.run(
+        ['pylint', '--recursive=y', '.']
+    )
+
+
 def test():
     """
-    Run all unittests. Equivalent to:
-    `poetry run python3 -u -m unittest`
+    Run all unit tests in the project virtualenv.
     """
     subprocess.run(
         ['python3', '-u', '-m', 'unittest']
