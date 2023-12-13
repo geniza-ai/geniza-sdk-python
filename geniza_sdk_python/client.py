@@ -44,7 +44,7 @@ class HttpClient:
             'Accept': 'application/json',
             'Authorization': FMT_AUTHZ.format(self.config.access.key, hmac),
             'Content-Type': 'application/json',
-            'User-Agent': FMT_USER_AGENT.format(self.config.version, hexversion)
+            'User-Agent': FMT_USER_AGENT.format(Config.VERSION, hexversion)
         }
 
         # The user's additional headers come first in the dict union that
