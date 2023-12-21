@@ -1,8 +1,6 @@
-from geniza_sdk_python.client import HttpClient
-from geniza_sdk_python.access import Access
-from geniza_sdk_python.config import Config
-
-
+from geniza.config.access import Access
+from geniza.api.client import HttpClient
+from geniza.config.config import Config
 class Geniza:
     """Geniza.ai Python SDK"""
 
@@ -55,3 +53,27 @@ class Geniza:
             raise ValueError("You must supply text from which to extract stocks.")
 
         return self._client.post('extractors/stock_symbols', {'text': text})
+
+    def detect_pii(self, text: str) -> dict:
+        """
+        This component accepts an article or some other text as input and detects any
+        PII that may be present in the text.
+
+        :param text: The input article or text.
+        """
+        if text is None or len(text) == 0:
+            raise ValueError("You must supply text from which to detect PII.")
+
+        return self._client.post('detectors/pii', {'text': text})
+
+    def detect_language(self, text: str) -> dict:
+        """
+        This component accepts an article or some other text as input and detects what language
+        the text is written in.
+
+        :param text: The input article or text.
+        """
+        if text is None or len(text) == 0:
+            raise ValueError("You must supply text from which to detect the language.")
+
+        return self._client.post('detectors/language', {'text': text})

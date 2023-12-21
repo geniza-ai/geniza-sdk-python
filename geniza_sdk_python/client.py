@@ -3,7 +3,7 @@ from json import dumps
 from urllib.parse import urljoin
 from sys import hexversion
 import requests
-from geniza_sdk_python.config import Config
+from geniza.config.config import Config
 
 FMT_AUTHZ = 'HMAC-SHA256 {}:{}'
 FMT_USER_AGENT = 'Geniza.ai-SDK-Python/{}, Python/{}'
@@ -55,16 +55,19 @@ class HttpClient:
 
         headers = add_headers | std_headers
 
+        final_url = self.config.get_full_api_path(url)
         response = requests.request(
             method,
-            urljoin(self.config.base_uri, path),
-            data=message,
+            final_url,
             headers=headers,
             timeout=self.config.request_timeout_s
         )
 
         if response.status_code != HTTPStatus.OK:
-            raise RuntimeError(f'HTTP Status {response.status_code}: {response.text()}')
+            raise RuntimeError('HTTP Status {}: {}'.format(
+                response.status_code,
+                response.text
+            ))
 
         return response.json()
 
