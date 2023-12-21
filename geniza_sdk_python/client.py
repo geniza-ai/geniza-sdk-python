@@ -64,9 +64,6 @@ class HttpClient:
             timeout=self.config.request_timeout_s
         )
 
-        print(response.request.headers)
-        print(response.request.body)
-
         if response.status_code != HTTPStatus.OK:
             raise RuntimeError('HTTP Status {}: {}'.format(
                 response.status_code,
