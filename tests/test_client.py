@@ -2,25 +2,39 @@ import re
 import unittest
 from json import dumps, loads
 from httmock import urlmatch, HTTMock
-from geniza_sdk_python.geniza import Geniza
+from geniza_sdk_python.access import Access
+from geniza_sdk_python.config import Config
+from geniza_sdk_python.client import HttpClient, _serialise
 
 TEST_ENDPOINT = 'post_endpoint'
 TEST_ENDPOINT_REGEX = f'/{TEST_ENDPOINT}$'
 
 
 class TestClient(unittest.TestCase):
-
+    """"""
     API_KEY = '123'
     API_SECRET = 'xyz'
     ADD_HEADER = {'X-Geniza-Custom-Header': 'FooBar'}
-    TEST_PAYLOAD = {'a': 1, 'b': 'two', 'c': 'NaN', 'd': None}
+    TEST_PAYLOAD = {'a': 1, 'b': 'two/2🍍', 'c': None}
 
     def setUp(self):
-        geniza = Geniza(self.API_KEY, self.API_SECRET)
+        access = Access(self.API_KEY, self.API_SECRET)
+        config = Config(access)
         # Override base URI to avoid name resolution and SSL errors during unit testing.
-        geniza.config.base_uri = 'http://localhost/v1'
+        config.base_uri = 'http://localhost/v1'
 
-        self.client = geniza._client
+        self.client = HttpClient(config)
+
+    def test_ser_null(self):
+        ser = _serialise(None)
+        self.assertEqual('', ser, 'A null payload becomes the empty string')
+
+    def test_set_ext_char(self):
+        ser = _serialise(self.TEST_PAYLOAD)
+        self.assertFalse(
+            '\\' in ser,
+            'Neither extended chars nor slashes should be escaped.'
+        )
 
     @urlmatch(path=TEST_ENDPOINT_REGEX)
     def _mock_post_payload(self, url, request):

@@ -11,6 +11,7 @@ class Config():
     def __init__(self, access: Access, request_timeout_s=10):
         super().__init__()
 
+        self.base_uri = None
         self.access = access
         self.request_timeout_s = request_timeout_s
         self.set_as_production()

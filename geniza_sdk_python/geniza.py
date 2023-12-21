@@ -26,12 +26,12 @@ class Geniza:
         resp = self._client.post('sapientSquirrel', payload)
         return resp['answer']
 
-    def provide_feedback(self, uuid: str, rating: float, add_feedback: str):
+    def provide_feedback(self, uuid: str, rating: float, feedback: str):
         """Provide feedback on a Geniza.ai response
 
         :param uuid: Unique Request ID
         :param rating: response quality rating from 0 (poor) to 1 (good)
-        :param add_feedback: additional feedback
+        :param feedback: additional feedback
 
         """
         if rating < 0 or rating > 1:
@@ -40,7 +40,7 @@ class Geniza:
         payload = {
             'uuid': uuid,
             'rating': rating,
-            'feedback': add_feedback
+            'feedback': feedback
         }
         self._client.post('feedback', payload)
 

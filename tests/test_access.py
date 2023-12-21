@@ -9,7 +9,7 @@ class TestAccess(unittest.TestCase):
         secret_key = 'xyz'
         self.access = Access(key, secret_key)
 
-    def testHmac(self):
+    def test_hmac(self):
         hmac = self.access.hmac('Ask not for whom the bell tolls')
         expected_hex = '63A73C45F3908562051EB74FBBC9B90F97FAB8A6F64748B4E1E5F7F38A0EFF79'
         self.assertEqual(expected_hex, hmac)

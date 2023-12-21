@@ -58,16 +58,13 @@ class HttpClient:
         response = requests.request(
             method,
             urljoin(self.config.base_uri, path),
-            data=dumps(payload),
+            data=message,
             headers=headers,
             timeout=self.config.request_timeout_s
         )
 
         if response.status_code != HTTPStatus.OK:
-            raise RuntimeError('HTTP Status {}: {}'.format(
-                response.status_code,
-                response.text()
-            ))
+            raise RuntimeError(f'HTTP Status {response.status_code}: {response.text()}')
 
         return response.json()
 
@@ -87,4 +84,7 @@ def _serialise(payload: dict) -> str:
     if payload is None:
         return ''
 
-    return dumps(payload, ensure_ascii=False)
+    # The extra step below is needed to counteract the escaping of extended
+    # chars by json.dumps(...)
+    utf8_bytes = dumps(payload, ensure_ascii=False).encode('utf8')
+    return utf8_bytes.decode()
