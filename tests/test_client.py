@@ -77,7 +77,7 @@ class TestClient(unittest.TestCase):
     @urlmatch(path=TEST_ENDPOINT_REGEX)
     def _mock_auth_header(self, url, request):
         hmac_header = request.headers['Authorization']
-        result = re.search(r'^HMAC-SHA256 (\w+):(\w+)', hmac_header)
+        result = re.search(r'^HMAC-SHA256 (\w+):(\w+)$', hmac_header)
         self.assertEqual(self.API_KEY, result.group(1))
         hmac_expected = self.client.config.access.hmac(request.body)
         self.assertEqual(hmac_expected, result.group(2))
