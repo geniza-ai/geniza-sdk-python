@@ -22,4 +22,4 @@ class Access():
             bytes(self._secret_key, 'utf-8'),
             msg=bytes(message, 'utf-8'),
             digestmod=sha256
-        ).hexdigest().upper()
+        ).hexdigest()

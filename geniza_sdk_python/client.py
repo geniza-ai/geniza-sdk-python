@@ -59,9 +59,13 @@ class HttpClient:
         response = requests.request(
             method,
             final_url,
+            data=message,
             headers=headers,
             timeout=self.config.request_timeout_s
         )
+
+        print(response.request.headers)
+        print(response.request.body)
 
         if response.status_code != HTTPStatus.OK:
             raise RuntimeError('HTTP Status {}: {}'.format(
