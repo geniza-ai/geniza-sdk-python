@@ -2,7 +2,7 @@ import hmac
 from hashlib import sha256
 
 
-class Access():
+class Access:
     """Implements message authentication for Geniza service access."""
     def __init__(self, key, secret_key):
         self.key = key

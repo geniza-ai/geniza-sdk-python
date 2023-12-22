@@ -12,6 +12,20 @@ class Geniza:
         if sandbox_mode:
             self.config.set_as_sandbox()
 
+    def call_endpoint(self, endpoint: str, **kwargs) -> dict:
+        """
+        This is a generic method to call Geniza endpoints.
+        Parameters
+        ----------
+        endpoint
+        params
+
+        Returns
+        -------
+
+        """
+
+
     def ask_sapient_squirrel(self, question: str) -> str:
         """The Sapient Squirrel
 

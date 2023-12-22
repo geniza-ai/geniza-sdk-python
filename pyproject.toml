@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.8"
 requests = "^2.31.0"
 
+
 [tool.poetry.group.dev.dependencies]
 httmock = "^1.4.0"
 pylint = "^3.0.0"

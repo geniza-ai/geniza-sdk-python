@@ -65,10 +65,7 @@ class HttpClient:
         )
 
         if response.status_code not in [HTTPStatus.OK, HTTPStatus.CREATED]:
-            raise RuntimeError('HTTP Status {}: {}'.format(
-                response.status_code,
-                response.text
-            ))
+            raise RuntimeError(f"HTTP Status {response.status_code}: {response.text}")
 
         return response.json()
 
