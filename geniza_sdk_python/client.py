@@ -64,7 +64,7 @@ class HttpClient:
             timeout=self.config.request_timeout_s
         )
 
-        if response.status_code != HTTPStatus.OK:
+        if response.status_code not in [HTTPStatus.OK, HTTPStatus.CREATED]:
             raise RuntimeError('HTTP Status {}: {}'.format(
                 response.status_code,
                 response.text
