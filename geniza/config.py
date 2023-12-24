@@ -1,4 +1,4 @@
-from geniza_sdk_python.access import Access
+from geniza.access import Access
 
 
 class Config():
@@ -23,3 +23,16 @@ class Config():
     def set_as_production(self):
         """Points this client at the production Geniza env"""
         self.base_uri = self._PROD_BASE_URI + self._BASE_PATH
+
+    def get_full_api_path(self, url: str) -> str:
+        """
+        Returns the full api path.
+        Parameters
+        ----------
+        url:  The input path.
+
+        Returns
+        -------
+        The full URL for an API call.
+        """
+        return f"{self.base_uri}/{url}"

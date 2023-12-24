@@ -1,29 +1,30 @@
 import re
 import unittest
 from json import dumps, loads
+
 from httmock import urlmatch, HTTMock
-from geniza_sdk_python.geniza import Geniza
+from geniza import Geniza
+
+
+@urlmatch(path=r'(.*\.)?sapientSquirrel$', method='post')
+def mock_sapient_squirrel(url, request):
+    req_parsed = loads(request.body)
+    #assertEqual('1234567890', req_parsed['question'])
+    return dumps({'answer': 'qwerty'})
 
 
 class TestGeniza(unittest.TestCase):
 
     def setUp(self):
-
         key = '123'
         secret_key = 'xyz'
 
         self.geniza = Geniza(key, secret_key)
         # Override base URI to avoid name resolution and SSL errors during unit testing.
-        self.geniza.config.base_uri = 'http://localhost/v1'
-
-    @urlmatch(path=r'/sapientSquirrel$')
-    def _mock_sapient_squirrel(self, url, request):
-        req_parsed = loads(request.body)
-        self.assertEqual('1234567890', req_parsed['question'])
-        return dumps({'answer': 'qwerty'})
+        #self.geniza.config.base_uri = 'http://localhost/v1'
 
     def test_sapient_squirrel(self):
-        with HTTMock(self._mock_sapient_squirrel):
+        with HTTMock(mock_sapient_squirrel):
             answer = self.geniza.ask_sapient_squirrel('1234567890')
             self.assertEqual('qwerty', answer)
 

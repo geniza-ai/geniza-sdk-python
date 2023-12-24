@@ -1,9 +1,8 @@
 from http import HTTPStatus
 from json import dumps
-from urllib.parse import urljoin
 from sys import hexversion
 import requests
-from geniza.config.config import Config
+from geniza.config import Config
 
 FMT_AUTHZ = 'HMAC-SHA256 {}:{}'
 FMT_USER_AGENT = 'Geniza.ai-SDK-Python/{}, Python/{}'
@@ -55,7 +54,7 @@ class HttpClient:
 
         headers = add_headers | std_headers
 
-        final_url = self.config.get_full_api_path(url)
+        final_url = self.config.get_full_api_path(path)
         response = requests.request(
             method,
             final_url,

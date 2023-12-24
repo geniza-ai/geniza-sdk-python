@@ -9,7 +9,7 @@ Installation
 ## Install using pip:
 
 ```sh
-pip install geniza_sdk_python
+pip install geniza
 ```
 
 ## Usage

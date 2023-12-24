@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "geniza_sdk_python"
+name = "geniza"
 version = "0.1.1"
 description = "This SDK is the best and easiest way to connect to the Geniza.ai API"
 authors = ["Geniza AI <support@geniza.ai>"]

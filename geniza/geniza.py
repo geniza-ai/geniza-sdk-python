@@ -1,6 +1,8 @@
-from geniza.config.access import Access
-from geniza.api.client import HttpClient
-from geniza.config.config import Config
+from geniza.access import Access
+from geniza.client import HttpClient
+from geniza.config import Config
+
+
 class Geniza:
     """Geniza.ai Python SDK"""
 
@@ -24,7 +26,7 @@ class Geniza:
         -------
 
         """
-
+        pass
 
     def ask_sapient_squirrel(self, question: str) -> str:
         """The Sapient Squirrel
