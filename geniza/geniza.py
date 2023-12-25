@@ -68,7 +68,7 @@ class Geniza:
         if text is None or len(text) == 0:
             raise ValueError("You must supply text from which to extract stocks.")
 
-        return self._client.post('extractors/stock_symbols', {'text': text})
+        return self._client.post('extractors/stockSymbols', {'text': text})
 
     def detect_pii(self, text: str) -> dict:
         """

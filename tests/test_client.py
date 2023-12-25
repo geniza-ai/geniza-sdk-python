@@ -6,8 +6,8 @@ from geniza.access import Access
 from geniza.config import Config
 from geniza.client import HttpClient, _serialise
 
-TEST_ENDPOINT = 'post_endpoint'
-TEST_ENDPOINT_REGEX = f'/{TEST_ENDPOINT}$'
+TEST_ENDPOINT = 'postEndpoint'
+TEST_ENDPOINT_REGEX = f'/v1/{TEST_ENDPOINT}$'
 
 
 class TestClient(unittest.TestCase):
