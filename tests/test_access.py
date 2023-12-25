@@ -1,5 +1,5 @@
 import unittest
-from geniza_sdk_python.access import Access
+from geniza.access import Access
 
 
 class TestAccess(unittest.TestCase):
@@ -11,5 +11,5 @@ class TestAccess(unittest.TestCase):
 
     def test_hmac(self):
         hmac = self.access.hmac('Ask not for whom the bell tolls')
-        expected_hex = '63A73C45F3908562051EB74FBBC9B90F97FAB8A6F64748B4E1E5F7F38A0EFF79'
+        expected_hex = '63a73c45f3908562051eb74fbbc9b90f97fab8a6f64748b4e1e5f7f38a0eff79'
         self.assertEqual(expected_hex, hmac)

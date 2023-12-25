@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "geniza_sdk_python"
+name = "geniza"
 version = "0.1.1"
 description = "This SDK is the best and easiest way to connect to the Geniza.ai API"
 authors = ["Geniza AI <support@geniza.ai>"]
@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.31.0"
+
 
 [tool.poetry.group.dev.dependencies]
 httmock = "^1.4.0"
@@ -18,5 +19,5 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-lint = 'geniza_sdk_python.scripts.poetry_scripts:lint'
-test = 'geniza_sdk_python.scripts.poetry_scripts:test'
+lint = 'geniza.scripts.poetry_scripts:lint'
+test = 'geniza.scripts.poetry_scripts:test'

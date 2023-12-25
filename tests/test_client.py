@@ -2,12 +2,12 @@ import re
 import unittest
 from json import dumps, loads
 from httmock import urlmatch, HTTMock
-from geniza_sdk_python.access import Access
-from geniza_sdk_python.config import Config
-from geniza_sdk_python.client import HttpClient, _serialise
+from geniza.access import Access
+from geniza.config import Config
+from geniza.client import HttpClient, _serialise
 
-TEST_ENDPOINT = 'post_endpoint'
-TEST_ENDPOINT_REGEX = f'/{TEST_ENDPOINT}$'
+TEST_ENDPOINT = 'postEndpoint'
+TEST_ENDPOINT_REGEX = f'/v1/{TEST_ENDPOINT}$'
 
 
 class TestClient(unittest.TestCase):
