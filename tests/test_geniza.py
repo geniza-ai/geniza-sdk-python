@@ -8,7 +8,6 @@ from geniza.geniza import Geniza
 class TestGeniza(unittest.TestCase):
 
     def setUp(self):
-
         key = '123'
         secret_key = 'xyz'
 
@@ -54,6 +53,50 @@ class TestGeniza(unittest.TestCase):
                 'MSFT has bought all of its employees Macbooks'
             )
             self.assertEqual(['MSFT'], symbols)
+
+    @urlmatch(path=r'/v1/detectors/pii$')
+    def _mock_pii_v1(self, url, request):
+        req_parsed = loads(request.body)
+        self.assertEqual(
+            {'text': "We've paid The Home Depot for your purchase in full so you can spread your $297.46 USD purchase "
+                     "into 4 payments. Here's your payment schedule: "
+                     "$74.37 USD due today"
+                     "$74.36 USD on January 3, 2024"
+                     "$74.36 USD on January 18, 2024"
+                     "$74.37 USD on February 2, 2024"
+                     "Both the total purchase and your down payment amounts will appear in your PayPal activity, "
+                     "but you're not being charged twice. If dates and amounts change for any reason, "
+                     "we’ll let you know. There's nothing else you need to do right now. We'll automatically withdraw "
+                     "your payments from: "
+                     "BANK OF AMERICA, N.A."
+                     "Bank Account x-1234"}, req_parsed)
+        return dumps({
+            "env": "testing", "version": "0.1.2", "messages": None,
+            "uuid": "80fd58c78e782a7f950e10a713105e026557ea44d54fe",
+            "pii": [{"category": "financial_identifiers",
+                     "subcategory": "payment schedule", "identifier": "$74.37 USD on February 2, 2024"},
+                    {"category": "financial_identifiers", "subcategory": "bank account number", "identifier": "x-1234"},
+                    {"category": "financial_identifiers", "subcategory": "bank name",
+                     "identifier": "BANK OF AMERICA, N.A."}]})
+
+    def test_detect_pii(self):
+        with HTTMock(self._mock_pii_v1):
+            response = self.geniza.detect_pii(
+                "We've paid The Home Depot for your purchase in full so you can spread your $297.46 USD purchase "
+                "into 4 payments. Here's your payment schedule: "
+                "$74.37 USD due today"
+                "$74.36 USD on January 3, 2024"
+                "$74.36 USD on January 18, 2024"
+                "$74.37 USD on February 2, 2024"
+                "Both the total purchase and your down payment amounts will appear in your PayPal activity, "
+                "but you're not being charged twice. If dates and amounts change for any reason, we’ll let you know. "
+                "There's nothing else you need to do right now. We'll automatically withdraw your payments from: "
+                "BANK OF AMERICA, N.A."
+                "Bank Account x-1234")
+
+            self.assertIsNotNone(response["pii"])
+            self.assertEqual(45, len(response['uuid']))
+            self.assertIsNotNone(response["version"])
 
 
 if __name__ == '__main__':
