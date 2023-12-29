@@ -94,3 +94,18 @@ class Geniza:
             raise ValueError("You must supply text from which to detect the language.")
 
         return self._client.post('detectors/language', {'text': text})
+
+    def analyze_product_feedback(self, feedback: str, title=None) -> dict:
+        """
+        Analyzes product feedback to determine if the feedback is positive, negative, or neutral in nature.
+
+        :param feedback: The product feedback
+        :param title: The title for the product feedback (optional)
+        """
+        if feedback is None or len(feedback) == 0:
+            raise ValueError("You must supply text from which to analyze the product feedback.")
+
+        if title is not None:
+            feedback = "Title: " + title + "\n\n" + feedback
+
+        return self._client.post('analyzers/productFeedback', {'feedback': feedback})
