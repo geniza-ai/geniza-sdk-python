@@ -117,15 +117,6 @@ class TestGeniza(unittest.TestCase):
         """
         # test feedback
         with HTTMock(self._mock_product_feedback_v1):
-            #     response = self.geniza.analyze_product_feedback(
-            #         "Actually, I was looking for some other methodology. Nothing wrong with the book, may be I could not"
-            #         "understand exactly what I wanted.")
-            #
-            #     self.assertIsNotNone(response['feedback'])
-            #     self.assertEqual("neutral", response['feedback']['classification'])
-            #     self.assertEqual(73, response['feedback']['confidence'])
-            #     self.assertEqual(45, len(response['uuid']))
-            #     self.assertIsNotNone(response['version'])
 
             # test feedback with title
             response = self.geniza.analyze_product_feedback(
