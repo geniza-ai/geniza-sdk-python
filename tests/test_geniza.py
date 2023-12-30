@@ -54,6 +54,45 @@ class TestGeniza(unittest.TestCase):
             )
             self.assertEqual(['MSFT'], symbols)
 
+    @urlmatch(path=r'/v1/detectors/language$')
+    def _mock_language_v1(self, url, request):
+        # test
+        req_parsed = loads(request.body)
+        self.assertEqual(
+            {'text': "Big Tech on Trial reporter Lee Hepner—who also serves as antitrust legal counsel for the "
+                "nonprofit the American Economic Liberties Project—posted on X (formerly Twitter) to summarize "
+                "Murphy's testimony as arguing, \"Google's Search monopoly is good for you, consumer choice is "
+                "'irrational,' and privacy is bad quality.\"\nOn the day prior, Murphy potentially bolstered the DOJ's "
+                "case by accidentally leaking a key figure that both Google and Apple had specifically requested "
+                "remain confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari "
+                "deal with Google."}, req_parsed)
+
+        return dumps({
+            "env": "testing", "version": "0.1.2", "messages": None,
+            "uuid": "80fd58c78e782a7f950e10a713105e026557ea44d54fe",
+            "language": {"code": "en", "name": "English", "localName": "English"}})
+
+    def test_detect_language_v1(self):
+        with HTTMock(self._mock_language_v1):
+            # runs detect language
+            response = self.geniza.detect_language(
+                "Big Tech on Trial reporter Lee Hepner—who also serves as antitrust legal counsel for the nonprofit "
+                "the American Economic Liberties Project—posted on X (formerly Twitter) to summarize Murphy's "
+                "testimony as arguing, \"Google's Search monopoly is good for you, consumer choice is 'irrational,' "
+                "and privacy is bad quality.\"\nOn the day prior, Murphy potentially bolstered the DOJ's case by "
+                "accidentally leaking a key figure that both Google and Apple had specifically requested remain "
+                "confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari deal "
+                "with Google.")
+
+            # tests
+            self.assertIsNotNone(response["language"])
+            self.assertEqual('en', response["language"]["code"])
+            self.assertEqual('English', response["language"]["name"])
+            self.assertEqual('English', response["language"]["localName"])
+            self.assertEqual(45, len(response["uuid"]))
+            self.assertIsNotNone(response["version"])
+
+
     @urlmatch(path=r'/v1/detectors/pii$')
     def _mock_pii_v1(self, url, request):
         req_parsed = loads(request.body)
