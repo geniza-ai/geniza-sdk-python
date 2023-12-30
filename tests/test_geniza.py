@@ -130,6 +130,90 @@ class TestGeniza(unittest.TestCase):
             self.assertEqual(45, len(response['uuid']))
             self.assertIsNotNone(response['version'])
 
+    @urlmatch(path=r'/v1/summarizers/messageSummary$')
+    def _mock_summary_v1(self, url, request):
+        # test that it sent correct message
+        req_parsed = loads(request.body)
+        self.assertEqual(
+            {"message": "As a Wisconsin Medical Center (WIMC), [CUSTOMER] knows that communication failure is a "
+                        "leading source of adverse events in health care. Indeed, the Joint Commission on "
+                        "Accreditation of Healthcare Organizations (JCAHO) identified communication failure as a "
+                        "pivotal factor in over 70% of more than 3.000 sentinel event reports since 1995. As of March "
+                        "2006, nearly 80% of more than 6,000 Root Cause Analysis reports to the WI National Center for "
+                        "Patient Safety (NCPS) involve communication failure as at least one of the primary factors "
+                        "contributing to adverse events and close calls. Following the suggestion from the Institute "
+                        "of Medicine (IOM) report \"To Err Is Human: Building a Safer Healthcare System\", "
+                        "recommending teamwork training to improve communication for health care organizations, "
+                        "Milwaukee Health Academy, Inc. (MHAI) began developing a Medical Team Training (MTT) program "
+                        "in 2003. This program was designed to introduce communication tools to professionals working "
+                        "in WI facilities -- tools which they can integrate into their clinical workplace."
+                        "The program you can subscribe to comprises three important components: "
+                        "1. Application, preparation, and planning;"
+                        "2. Learning sessions at the WIMC; and"
+                        "3. Follow-up data collection and support from involved WIMCs."
+                        "As of April 2006, 19 facilities were participating in the program, involving clinical units "
+                        "such as the OR (10), ICU (4), Medical-Surgery Unit (1), Ambulatory Clinics (3), and ED (1). "
+                        "The Safety Attitudes Questionnaire (SAQ), developed and validated by the Johns Hopkins "
+                        "Quality and Safety Research Group, was completed by each participant prior to commencing the "
+                        "session, and repeated one year later. The SAQ measured a significant change in attitude and "
+                        "behavior regarding six factors: safety climate, teamwork climate, job satisfaction, working "
+                        "conditions, perceptions of management, and stress recognition. Choosing [PROVIDER]'s training "
+                        "program to implement MTT communication principles in health care delivery will improve "
+                        "outcomes for your patients while rewarding your employees in the accomplishment of their "
+                        "daily tasks. When you consider the changes observed against the six factors mentioned above, "
+                        "you come to the conclusion that [CUSTOMER] will get significant benefits in selecting "
+                        "[PROVIDER] to train its caregivers to better deliver care services to the patient community.",
+             'wordCount': 10},
+            req_parsed)
+
+        return dumps({"env": "testing", "version": "0.4.0", "messages": None,
+                      "uuid": "80fd58c78e782a7f950e10a713105e026557ea44d54fe",
+                      "message": {"summary": "The flies in the back room have been completely eliminated",
+                                  "wordCount": 10}})
+
+    def test_message_summary_v1(self):
+        """
+        test function message_summary
+        """
+        with HTTMock(self._mock_summary_v1):
+            response = self.geniza.message_summary(
+                "As a Wisconsin Medical Center (WIMC), [CUSTOMER] knows that communication failure is a leading "
+                "source of adverse events in health care. Indeed, the Joint Commission on Accreditation of Healthcare "
+                "Organizations (JCAHO) identified communication failure as a pivotal factor in over 70% of more than "
+                "3.000 sentinel event reports since 1995. As of March 2006, nearly 80% of more than 6,000 Root Cause "
+                "Analysis reports to the WI National Center for Patient Safety (NCPS) involve communication failure as "
+                "at least one of the primary factors contributing to adverse events and close calls. Following the "
+                "suggestion from the Institute of Medicine (IOM) report \"To Err Is Human: Building a Safer Healthcare "
+                "System\", recommending teamwork training to improve communication for health care organizations, "
+                "Milwaukee Health Academy, Inc. (MHAI) began developing a Medical Team Training (MTT) program in 2003. "
+                "This program was designed to introduce communication tools to professionals working in WI facilities "
+                "-- tools which they can integrate into their clinical workplace."
+                "The program you can subscribe to comprises three important components: "
+                "1. Application, preparation, and planning;"
+                "2. Learning sessions at the WIMC; and"
+                "3. Follow-up data collection and support from involved WIMCs."
+                "As of April 2006, 19 facilities were participating in the program, involving clinical units such as "
+                "the OR (10), ICU (4), Medical-Surgery Unit (1), Ambulatory Clinics (3), and ED (1). The Safety "
+                "Attitudes Questionnaire (SAQ), developed and validated by the Johns Hopkins Quality and Safety "
+                "Research Group, was completed by each participant prior to commencing the session, and repeated one "
+                "year later. The SAQ measured a significant change in attitude and behavior regarding six factors: "
+                "safety climate, teamwork climate, job satisfaction, working conditions, perceptions of management, "
+                "and stress recognition. Choosing [PROVIDER]'s training program to implement MTT communication "
+                "principles in health care delivery will improve outcomes for your patients while rewarding your "
+                "employees in the accomplishment of their daily tasks. When you consider the changes observed against "
+                "the six factors mentioned above, you come to the conclusion that [CUSTOMER] will get significant "
+                "benefits in selecting [PROVIDER] to train its caregivers to better deliver care services to the "
+                "patient community.", 10)
+
+            # test response
+            self.assertIsNotNone(response)
+            self.assertEqual(45, len(response["uuid"]))
+            self.assertEqual("The flies in the back room have been completely eliminated",
+                             response["message"]["summary"])
+            self.assertEqual(10, response["message"]["wordCount"])
+            self.assertIsNotNone(response["version"])
+
+
 
 if __name__ == '__main__':
     unittest.main()

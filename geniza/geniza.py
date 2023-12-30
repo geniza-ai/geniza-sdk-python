@@ -109,3 +109,21 @@ class Geniza:
             feedback = "Title: " + title + "\n\n" + feedback
 
         return self._client.post('analyzers/productFeedback', {'feedback': feedback})
+
+    def message_summary(self, message: str, word_count=None) -> dict:
+        """
+        This component accepts a message or some other text as input and creates a summary of it
+
+        :param message: The input message or text.
+
+        :param word_count: The desired length of the summary. Note: setting this does not guarantee the summary will
+        be less than $wordCount. [default: 150]
+        """
+        raw_pay_load = {'message': message}
+        if word_count is not None:
+            raw_pay_load['wordCount'] = word_count
+
+        if message is None or len(message) == 0:
+            raise ValueError("You must supply text from which to create the summary.")
+
+        return self._client.post('summarizers/messageSummary', raw_pay_load)
