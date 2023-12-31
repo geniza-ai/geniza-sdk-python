@@ -98,8 +98,7 @@ class TestGeniza(unittest.TestCase):
             self.assertEqual(45, len(response['uuid']))
             self.assertIsNotNone(response["version"])
 
-
- @urlmatch(path=r'/v1/analyzers/productFeedback$')
+    @urlmatch(path=r'/v1/analyzers/productFeedback$')
     def _mock_product_feedback_v1(self, url, request):
         req_parsed = loads(request.body)
         self.assertEqual("Title: I really liked this book\n\nActually, I was looking for some other methodology."
@@ -130,7 +129,6 @@ class TestGeniza(unittest.TestCase):
             self.assertEqual(73, response['feedback']['confidence'])
             self.assertEqual(45, len(response['uuid']))
             self.assertIsNotNone(response['version'])
-
 
 
 if __name__ == '__main__':
