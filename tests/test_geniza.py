@@ -60,12 +60,12 @@ class TestGeniza(unittest.TestCase):
         req_parsed = loads(request.body)
         self.assertEqual(
             {'text': "Big Tech on Trial reporter Lee Hepner—who also serves as antitrust legal counsel for the "
-                "nonprofit the American Economic Liberties Project—posted on X (formerly Twitter) to summarize "
-                "Murphy's testimony as arguing, \"Google's Search monopoly is good for you, consumer choice is "
-                "'irrational,' and privacy is bad quality.\"\nOn the day prior, Murphy potentially bolstered the DOJ's "
-                "case by accidentally leaking a key figure that both Google and Apple had specifically requested "
-                "remain confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari "
-                "deal with Google."}, req_parsed)
+                     "nonprofit the American Economic Liberties Project—posted on X (formerly Twitter) to summarize "
+                     "Murphy's testimony as arguing, \"Google's Search monopoly is good for you, consumer choice is "
+                     "'irrational,' and privacy is bad quality.\"\nOn the day prior, Murphy potentially bolstered the DOJ's "
+                     "case by accidentally leaking a key figure that both Google and Apple had specifically requested "
+                     "remain confidential—confirming that Apple gets a 36 percent cut of search ad revenue from its Safari "
+                     "deal with Google."}, req_parsed)
 
         return dumps({
             "env": "testing", "version": "0.1.2", "messages": None,
@@ -91,7 +91,6 @@ class TestGeniza(unittest.TestCase):
             self.assertEqual('English', response["language"]["localName"])
             self.assertEqual(45, len(response["uuid"]))
             self.assertIsNotNone(response["version"])
-
 
     @urlmatch(path=r'/v1/detectors/pii$')
     def _mock_pii_v1(self, url, request):
@@ -155,7 +154,6 @@ class TestGeniza(unittest.TestCase):
         """
         # test feedback
         with HTTMock(self._mock_product_feedback_v1):
-
             # test feedback with title
             response = self.geniza.analyze_product_feedback(
                 'Actually, I was looking for some other methodology. Nothing wrong with the book, may be I could not '
