@@ -119,11 +119,11 @@ class Geniza:
         :param word_count: The desired length of the summary. Note: setting this does not guarantee the summary will
         be less than $wordCount. [default: 150]
         """
-        raw_pay_load = {'message': message}
+        raw_payload = {'message': message}
         if word_count is not None:
-            raw_pay_load['wordCount'] = word_count
+            raw_payload['wordCount'] = word_count
 
         if message is None or len(message) == 0:
             raise ValueError("You must supply text from which to create the summary.")
 
-        return self._client.post('summarizers/messageSummary', raw_pay_load)
+        return self._client.post('summarizers/messageSummary', raw_payload)
